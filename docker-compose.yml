@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  frontend:
+    env_file:
+      "./tg-web-app-react-typescript/.env"
+    build:
+      context: ./tg-web-app-react-typescript
+    volumes:
+      - ./tg-web-app-react-typescript:/app
+      - /app/node_modules/
+    ports:
+      - "3456:3456"
+  server: 
+    env_file:
+      "./tg-web-app-node/.env"
+    build:
+      context: ./tg-web-app-node
+    volumes:
+      - ./tg-web-app-node:/app
+      - /app/node_modules/
+    ports:
+      - "9595:9595"
