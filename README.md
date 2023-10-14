@@ -8,3 +8,8 @@ docker-compose up
 ```
 
 If you will change ports in .env then you alse need to change ports in docker-compose.yml file 
+
+# Important information
+
+first do not run on the server inside docker it can cause problems with telegram polling 
+second all links must be https otherwirse project will not going to work
