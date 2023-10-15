@@ -4,6 +4,7 @@ import * as cors from 'cors';
 import * as i18next from 'i18next';
 import 'dotenv/config';
 
+//TODO: move to another file
 i18next.init({
     lng: 'en',
     fallbackLng: 'en',
