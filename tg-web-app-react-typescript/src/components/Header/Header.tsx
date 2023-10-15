@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from "../Button/Button";
 import {useTelegram} from "../../hooks/useTelegram";
 import './Header.css';
@@ -19,6 +19,12 @@ const Header = () => {
         i18n.changeLanguage(lang);
         dispatch(changeLanguageSuccess(lang));
     }
+
+    useEffect(() => {
+        if (user?.language_code !== undefined) {
+            changeLanguageHandler(user?.language_code);
+        }
+    }, [])
 
     return (
         <div className={'header'}>
