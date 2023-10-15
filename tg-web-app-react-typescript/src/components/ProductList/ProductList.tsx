@@ -4,8 +4,7 @@ import ProductItem from "../ProductItem/ProductItem";
 import {useTelegram} from "../../hooks/useTelegram";
 import {useCallback, useEffect} from "react";
 import { ProductInterface } from '../ProductItem/ProductInterface';
-
-
+import { useTranslation } from 'react-i18next';
 
 const products:Array<ProductInterface> = [
     {id: 1, title: {ru:'Джинсы', en:'Jeans'}, price: 5000, description: {ru:'Синего цвета, прямые', en:'Blue, straight'}},
@@ -27,6 +26,7 @@ const getTotalPrice = (items:Array<ProductInterface> = []) => {
 const ProductList = () => {
     const [addedItems, setAddedItems] = useState<Array<ProductInterface>>([]);
     const {tg, queryId} = useTelegram();
+    const { t } = useTranslation();
 
     const onSendData = useCallback(() => {
         const data = {
@@ -67,7 +67,7 @@ const ProductList = () => {
         } else {
             tg.MainButton.show();
             tg.MainButton.setParams({
-                text: `Купить ${getTotalPrice(newItems)}`
+                text: `${t('messages:buy')} ${getTotalPrice(newItems)}`
             })
         }
     }

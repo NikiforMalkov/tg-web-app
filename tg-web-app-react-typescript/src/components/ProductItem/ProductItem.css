@@ -19,6 +19,10 @@
     font-size: 0.8em;
 }
 
+.title, .description, .price {
+    color: var(--tg-theme-text-color);
+}
+
 .add-btn {
     width: 100%;
 }
