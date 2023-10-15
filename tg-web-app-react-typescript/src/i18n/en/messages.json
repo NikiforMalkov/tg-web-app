@@ -1,0 +1,11 @@
+{
+    "physical":"Physical",
+    "legal":"Legal",
+    "street":"Street",
+    "country":"Country",
+    "enter_details":"Enter your details",
+    "send_details":"Send details",
+    "price":"Price: ",
+    "add_to_cart":"Add to cart",
+    "close":"Close"
+}
