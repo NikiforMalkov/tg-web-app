@@ -3,26 +3,29 @@ import './ProductList.css';
 import ProductItem from "../ProductItem/ProductItem";
 import {useTelegram} from "../../hooks/useTelegram";
 import {useCallback, useEffect} from "react";
+import { ProductInterface } from '../ProductItem/ProductInterface';
 
-const products = [
-    {id: '1', title: 'Джинсы', price: 5000, description: 'Синего цвета, прямые'},
-    {id: '2', title: 'Куртка', price: 12000, description: 'Зеленого цвета, теплая'},
-    {id: '3', title: 'Джинсы 2', price: 5000, description: 'Синего цвета, прямые'},
-    {id: '4', title: 'Куртка 8', price: 122, description: 'Зеленого цвета, теплая'},
-    {id: '5', title: 'Джинсы 3', price: 5000, description: 'Синего цвета, прямые'},
-    {id: '6', title: 'Куртка 7', price: 600, description: 'Зеленого цвета, теплая'},
-    {id: '7', title: 'Джинсы 4', price: 5500, description: 'Синего цвета, прямые'},
-    {id: '8', title: 'Куртка 5', price: 12000, description: 'Зеленого цвета, теплая'},
+
+
+const products:Array<ProductInterface> = [
+    {id: 1, title: {ru:'Джинсы', en:'Jeans'}, price: 5000, description: {ru:'Синего цвета, прямые', en:'Blue, straight'}},
+    {id: 2, title: {ru:'Куртка', en:'Jacket'}, price: 12000, description: {ru:'Зеленого цвета, теплая', en:'Green, warm'}},
+    {id: 3, title: {ru:'Джинсы 2', en:'Jeans 2'}, price: 5000, description: {ru:'Синего цвета, прямые', en:'Blue, straight'}},
+    {id: 4, title: {ru:'Куртка 8', en:'Jacket 8'}, price: 122, description: {ru:'Зеленого цвета, теплая', en:'Green, warm'}},
+    {id: 5, title: {ru:'Джинсы 3', en:'Jeans 3'}, price: 5000, description: {ru:'Синего цвета, прямые', en:'Blue, straight'}},
+    {id: 6, title: {ru:'Куртка 7', en:'Jacket 7'}, price: 600, description: {ru:'Зеленого цвета, теплая', en:'Green, warm'}},
+    {id: 7, title: {ru:'Джинсы 4', en:'Jeans 4'}, price: 5500, description: {ru:'Синего цвета, прямые', en:'Blue, straight'}},
+    {id: 8, title: {ru:'Куртка 5', en:'Jacket 5'}, price: 12000, description: {ru:'Зеленого цвета, теплая', en:'Green, warm'}},
 ]
 
-const getTotalPrice = (items = []) => {
-    return items.reduce((acc, item) => {
+const getTotalPrice = (items:Array<ProductInterface> = []) => {
+    return items.reduce((acc, item:ProductInterface) => {
         return acc += item.price
     }, 0)
 }
 
 const ProductList = () => {
-    const [addedItems, setAddedItems] = useState([]);
+    const [addedItems, setAddedItems] = useState<Array<ProductInterface>>([]);
     const {tg, queryId} = useTelegram();
 
     const onSendData = useCallback(() => {
@@ -47,7 +50,7 @@ const ProductList = () => {
         }
     }, [onSendData])
 
-    const onAdd = (product) => {
+    const onAdd = (product:ProductInterface) => {
         const alreadyAdded = addedItems.find(item => item.id === product.id);
         let newItems = [];
 

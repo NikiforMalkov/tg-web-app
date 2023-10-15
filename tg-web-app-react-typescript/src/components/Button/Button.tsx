@@ -1,7 +1,8 @@
 import React from 'react';
 import './Button.css';
 
-const Button = (props) => {
+//TODO: remove hack
+const Button = (props:any) => {
     return (
         <button {...props} className={'button ' + props.className}/>
     );

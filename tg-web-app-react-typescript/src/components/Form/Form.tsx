@@ -1,12 +1,14 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import './Form.css';
 import {useTelegram} from "../../hooks/useTelegram";
+import { useTranslation } from 'react-i18next';
 
 const Form = () => {
     const [country, setCountry] = useState('');
     const [street, setStreet] = useState('');
     const [subject, setSubject] = useState('physical');
     const {tg} = useTelegram();
+    const { t } = useTranslation();
 
     const onSendData = useCallback(() => {
         const data = {
@@ -26,7 +28,7 @@ const Form = () => {
 
     useEffect(() => {
         tg.MainButton.setParams({
-            text: 'Отправить данные'
+            text: t('messages:send_details')
         })
     }, [])
 
@@ -38,38 +40,39 @@ const Form = () => {
         }
     }, [country, street])
 
-    const onChangeCountry = (e) => {
-        setCountry(e.target.value)
+    const onChangeCountry = (e: ChangeEvent<HTMLInputElement>) => {
+        
+        setCountry((e.target as HTMLInputElement).value)
     }
 
-    const onChangeStreet = (e) => {
-        setStreet(e.target.value)
+    const onChangeStreet = (e: ChangeEvent<HTMLInputElement>) => {
+        setStreet((e.target as HTMLInputElement).value)
     }
 
-    const onChangeSubject = (e) => {
-        setSubject(e.target.value)
+    const onChangeSubject = (e: ChangeEvent<HTMLSelectElement>) => {
+        setSubject((e.target as HTMLSelectElement).value)
     }
 
     return (
         <div className={"form"}>
-            <h3>Введите ваши данные</h3>
+            <h3>{t('messages:enter_details')}</h3>
             <input
                 className={'input'}
                 type="text"
-                placeholder={'Страна'}
+                placeholder={t('messages:country')}
                 value={country}
                 onChange={onChangeCountry}
             />
             <input
                 className={'input'}
                 type="text"
-                placeholder={'Улица'}
+                placeholder={t('messages:street')}
                 value={street}
                 onChange={onChangeStreet}
             />
             <select value={subject} onChange={onChangeSubject} className={'select'}>
-                <option value={'physical'}>Физ. лицо</option>
-                <option value={'legal'}>Юр. лицо</option>
+                <option value={'physical'}>{t('messages:physical')}</option>
+                <option value={'legal'}>{t('messages:legal')}</option>
             </select>
         </div>
     );
