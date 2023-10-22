@@ -2,44 +2,9 @@ import * as TelegramBot from 'node-telegram-bot-api';
 import * as express from 'express';
 import * as cors from 'cors';
 import * as i18next from 'i18next';
+import './i18n/config';
 import 'dotenv/config';
 
-//TODO: move to another file
-i18next.init({
-    lng: 'en',
-    fallbackLng: 'en',
-    resources: {
-        en: {
-          translation: {
-            hello_world: "hello world",
-                make_order: "Make order",
-                fill_form: "Fill the form",
-                all_info: "You will receive all the information in this chat",
-                country:"Your country: {{country, string}}",
-                street:"Your street: {{street, string}}",
-                order_title_complete: "Successful purchase",
-                order_text_complete: "Congratulations on your purchase, you have purchased an item worth {{totalPrice, number}}, {{products, string}}",
-                go_to_store:"Visit our online store using the button below",
-                button_fill_form:"A button will appear below, fill out the form",
-                thank_you:"Thanks for your feedback!"
-            }
-        },
-        ru: {
-            translation: {
-                "make_order": "Сделать заказ",
-                "fill_form": "Заполнить форму",
-                "all_info": "Всю информацию вы получите в этом чате",
-                "country":"Ваша страна: {{country, string}}",
-                "street":"Ваша улица: {{street, string}}",
-                "order_title_complete": "Успешная покупка",
-                "order_text_complete": "Поздравляю с покупкой, вы приобрели товар на сумму {{totalPrice, number}}, {{products, string}}",
-                "go_to_store":"Заходи в наш интернет магазин по кнопке ниже",
-                "button_fill_form":"Ниже появится кнопка, заполни форму",
-                "thank_you":"Спасибо за обратную связь!"
-            }
-        }
-    },
-});
 const token = process.env.TOKEN;
 const webAppUrl = process.env.WEB_APP_URL;
 
@@ -48,6 +13,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+bot.on("polling_error", console.log);
 
 bot.on('message', async (msg:TelegramBot.Message) => {
     const chatId = msg.chat.id;
@@ -64,7 +31,6 @@ bot.on('message', async (msg:TelegramBot.Message) => {
                 keyboard: [
                     [
                         {text: i18next.t("fill_form"), web_app: {url: webAppUrl + '/form'}},
-                        {text: i18next.t("make_order"), web_app: {url: webAppUrl}}
                     ]
                 ]
             }
@@ -77,6 +43,23 @@ bot.on('message', async (msg:TelegramBot.Message) => {
                 ]
             }
         })
+    }
+
+    if (text == '/inline') {
+        //InlineKeyboardButton
+        /*
+        let btn = {
+            text: "button"
+            url?: string | undefined;
+            callback_data?: string | undefined;
+            web_app?: WebAppInfo;
+            login_url?: LoginUrl | undefined;
+            switch_inline_query?: string | undefined;
+            switch_inline_query_current_chat?: string | undefined;
+            callback_game?: CallbackGame | undefined;
+            pay?: boolean | undefined;
+        }
+        */
     }
 
     if(msg?.web_app_data?.data) {
@@ -96,6 +79,13 @@ bot.on('message', async (msg:TelegramBot.Message) => {
 });
 
 app.post('/web-data', async (req, res) => {
+    if (req.acceptsLanguages().length > 0) {
+        if (req.query.lang != undefined) {
+            i18next.changeLanguage(req.query.lang.toString())
+        } else {
+            i18next.changeLanguage(req.acceptsLanguages()[0])
+        } 
+    }
     const {queryId, products = [], totalPrice} = req.body;
     try {
         

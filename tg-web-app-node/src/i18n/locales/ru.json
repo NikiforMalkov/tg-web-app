@@ -1,0 +1,12 @@
+{
+    "make_order": "Сделать заказ",
+    "fill_form": "Заполнить форму",
+    "all_info": "Всю информацию вы получите в этом чате",
+    "country":"Ваша страна: {{country, string}}",
+    "street":"Ваша улица: {{street, string}}",
+    "order_title_complete": "Успешная покупка",
+    "order_text_complete": "Поздравляю с покупкой, вы приобрели товар на сумму {{totalPrice, number}}, {{products, string}}",
+    "go_to_store":"Заходи в наш интернет магазин по кнопке ниже",
+    "button_fill_form":"Ниже появится кнопка, заполни форму",
+    "thank_you":"Спасибо за обратную связь!"
+}

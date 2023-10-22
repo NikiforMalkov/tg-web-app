@@ -5,6 +5,8 @@ import {useTelegram} from "../../hooks/useTelegram";
 import {useCallback, useEffect} from "react";
 import { ProductInterface } from '../ProductItem/ProductInterface';
 import { useTranslation } from 'react-i18next';
+import { useTypedSelector } from '../../hooks/hooks';
+import { RootState } from '../../store/rootReducer';
 
 const products:Array<ProductInterface> = [
     {id: 1, title: {ru:'Джинсы', en:'Jeans'}, price: 5000, description: {ru:'Синего цвета, прямые', en:'Blue, straight'}},
@@ -27,6 +29,7 @@ const ProductList = () => {
     const [addedItems, setAddedItems] = useState<Array<ProductInterface>>([]);
     const {tg, queryId} = useTelegram();
     const { t } = useTranslation();
+    const { currentLanguage }  = useTypedSelector((state:RootState) => state.lang)
 
     const onSendData = useCallback(() => {
         const data = {
@@ -34,7 +37,10 @@ const ProductList = () => {
             totalPrice: getTotalPrice(addedItems),
             queryId,
         }
-        fetch(process.env.REACT_APP_SERVER + '/web-data', {
+
+        let langQuery = '?lang=' + currentLanguage
+
+        fetch(process.env.REACT_APP_SERVER + '/web-data' + langQuery , {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
