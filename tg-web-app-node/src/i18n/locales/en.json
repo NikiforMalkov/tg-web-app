@@ -1,0 +1,12 @@
+{
+    "make_order": "Make order",
+    "fill_form": "Fill the form",
+    "all_info": "You will receive all the information in this chat",
+    "country":"Your country: {{country, string}}",
+    "street":"Your street: {{street, string}}",
+    "order_title_complete": "Successful purchase",
+    "order_text_complete": "Congratulations on your purchase, you have purchased an item worth {{totalPrice, number}}, {{products, string}}",
+    "go_to_store":"Visit our online store using the button below",
+    "button_fill_form":"A button will appear below, fill out the form",
+    "thank_you":"Thanks for your feedback!"
+}
